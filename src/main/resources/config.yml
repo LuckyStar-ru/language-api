@@ -1,0 +1,20 @@
+database:
+  type: MySQL # SQLite or MySQL
+  ipWithPort: "localhost:3306"
+  tablename:
+  username:
+  password:
+defaultlanguage: ru #Также используется для сохранения языка в БД для новых игроков.
+#Каждый новый объявленный язык должен начинаться со строчки: lang.
+langs:
+  ru:
+    lang: "Выбран язык: русский"
+    test-message: Привет мир!
+  en:
+    lang: "Chosen language: english"
+    change-language: "&bOur server is international!\n&bSelect your language: &f&lru &b| &f&len &b|&f&l fr"
+    not-a-language: "&cThis language is undefined. Please, select one of the available languages: &lru, en, fr."
+    test-message: Hello world!
+  fr:
+    lang: "Langue choisie: Français"
+    test-message: Bonjour le monde!
