@@ -18,8 +18,7 @@ public class LanguageCommand extends Command {
             ProxiedPlayer player = (ProxiedPlayer) sender;
             if (args.length == 1) {
 
-                if (LangAPI.getInst().getMessage(args[0].toLowerCase(), "lang") != null) {
-                    LangAPI.getInst().getDatabase().updatePlayer(player.getUniqueId(), args[0].toLowerCase());
+                if (LangAPI.getInst().updatePlayerLang(player.getUniqueId(), args[0])) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             LangAPI.getInst().getMessage(args[0].toLowerCase(), "lang")));
                 } else {

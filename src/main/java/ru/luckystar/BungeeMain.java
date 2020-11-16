@@ -19,10 +19,11 @@ public class BungeeMain extends Plugin {
     /* TODO: solve SLF4J warn */
     @Override
     public void onEnable() {
+        DatabaseRepository dbRepo = null;
         try {
             Configuration config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getConfigFile());
             /* === DataBase init === */
-            DatabaseRepository dbRepo = new DatabaseRepository(
+            dbRepo = new DatabaseRepository(
                     this.getDataFolder().getAbsolutePath(),
                     config.getString("database.type"),
                     config.getString("database.ipWithPort") + "/" + config.getString("database.tableName"),
@@ -32,13 +33,12 @@ public class BungeeMain extends Plugin {
             );
             /* === Custom Config init === */
             LangConfig langConfig = new LangConfig();
-            HashMap<String, String> temp = new HashMap<>();
             config.getSection("langs").getKeys().forEach(lang -> {
+                HashMap<String, String> temp = new HashMap<>();
                 config.getSection("langs." + lang).getKeys().forEach(key -> {
                     temp.put(key, config.getString("langs." + lang + "." + key));
                 });
                 langConfig.addLang(lang, temp);
-                temp.clear();
             });
             /* === API init === */
             LangAPI.init(dbRepo, langConfig);
@@ -48,7 +48,7 @@ public class BungeeMain extends Plugin {
 
         getProxy().getPluginManager().registerCommand(this, new LanguageCommand());
         getProxy().getPluginManager().registerCommand(this, new TestLanguageCommand());
-        getProxy().getPluginManager().registerListener(this, new JoinHadler());
+        getProxy().getPluginManager().registerListener(this, new JoinHadler(dbRepo));
     }
 
     public File getConfigFile() {

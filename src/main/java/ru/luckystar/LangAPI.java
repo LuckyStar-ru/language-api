@@ -21,20 +21,16 @@ public class LangAPI {
         return langAPI;
     }
 
-    public DatabaseRepository getDatabase() {
-        return this.dbRepo;
-    }
-
-    public LangConfig getConfig() {
-        return this.config;
+    public boolean updatePlayerLang(UUID uuid, String lang) {
+        return this.config.getLangs().contains(lang.toLowerCase()) ? this.dbRepo.updatePlayer(uuid, lang.toLowerCase()) : false;
     }
 
     public String getMessage(String lang, String path) {
-        return getConfig().getLangMessage(lang, path);
+        return this.config.getLangMessage(lang, path);
     }
 
     public String getLangMessage(UUID uuid, String path) {
-        return getConfig().getLangMessage(this.dbRepo.getPlayerLang(uuid), path);
+        return this.config.getLangMessage(this.dbRepo.getPlayerLang(uuid), path);
     }
 
 }

@@ -53,12 +53,14 @@ public class DatabaseRepository {
         }
     }
 
-    public void updatePlayer(UUID uuid, String lang) {
+    public boolean updatePlayer(UUID uuid, String lang) {
         try {
             this.connection.createStatement().execute("UPDATE players SET language=\'" + lang + "\' WHERE uuid=\'" + uuid + "\'");
+            return true;
         } catch (SQLException throwables) {
             Logger.getLogger("minecraft").log(Level.WARNING,"§4[Languages] §cFailed Update Player In DataBase");
             throwables.printStackTrace();
+            return false;
         }
     }
 

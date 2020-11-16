@@ -21,13 +21,12 @@ public class SpigotMain extends JavaPlugin {
         );
         /* === Custom Config init === */
         LangConfig langConfig = new LangConfig();
-        HashMap<String, String> temp = new HashMap<>();
         config.getConfigurationSection("langs").getKeys(false).forEach(lang -> {
+            HashMap<String, String> temp = new HashMap<>();
             config.getConfigurationSection("langs." + lang).getKeys(false).forEach(key -> {
                 temp.put(key, config.getString("langs." + lang + "." + key));
             });
             langConfig.addLang(lang, temp);
-            temp.clear();
         });
         /* ===                    === */
         LangAPI.init(dbRepo, langConfig);
